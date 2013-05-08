@@ -309,7 +309,7 @@ endif(UNIX)
 
 
 if (CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
-	set( CMAKE_C_FLAGS "-Wall -Werror -O4 -fvisibility=hidden " )
+	set( CMAKE_C_FLAGS "-Wall -O4 -fvisibility=hidden " )
 endif ()
 
 source_group("Headers Private"  FILES ${HDR_PRIVATE})
@@ -353,13 +353,13 @@ endif(WIN32)
 
 # Set the so version of the lib.
 # Equivalent to LDFLAGS=-version-info x:x:x
-if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
-	foreach(lib websockets websockets_shared)
-		set_target_properties(${lib} 
-			PROPERTIES
-			SOVERSION ${SOVERSION})
-	endforeach()
-endif()
+# if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+# 	foreach(lib websockets websockets_shared)
+# 		set_target_properties(${lib} 
+# 			PROPERTIES
+# 			SOVERSION ${SOVERSION})
+# 	endforeach()
+# endif()
 
 set(LIB_LIST)
 
@@ -407,7 +407,7 @@ if (NOT WITHOUT_EXTENSIONS)
 	endif()
 
 	# Make sure ZLib is compiled before the libs.
-	foreach (lib websockets websockets_shared)
+	foreach (lib websockets)
 		add_dependencies(${lib} ZLIB)
 	endforeach()
 
