@@ -1506,7 +1506,7 @@ lws_latency(struct libwebsocket_context *context, struct libwebsocket *wsi,
 
 #ifdef LWS_NO_SERVER
 int
-_libwebsocket_rx_flow_control(struct libswebsocket *wsi)
+_libwebsocket_rx_flow_control(struct libwebsocket *wsi)
 {
 	return 0;
 }

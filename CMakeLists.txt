@@ -323,10 +323,10 @@ add_library(websockets STATIC
 			${HDR_PRIVATE}
 			${HDR_PUBLIC}
 			${SOURCES})
-add_library(websockets_shared SHARED
-			${HDR_PRIVATE}
-			${HDR_PUBLIC}
-			${SOURCES})
+#add_library(websockets_shared SHARED
+#			${HDR_PRIVATE}
+#			${HDR_PUBLIC}
+#			${SOURCES})
 
 if (WIN32)
 	# On Windows libs have the same file ending (.lib)
@@ -347,9 +347,9 @@ endif(WIN32)
 
 # We want the shared lib to be named "libwebsockets"
 # not "libwebsocket_shared".
-set_target_properties(websockets_shared
-		PROPERTIES 
-		OUTPUT_NAME websockets)
+# set_target_properties(websockets_shared
+# 		PROPERTIES 
+# 		OUTPUT_NAME websockets)
 
 # Set the so version of the lib.
 # Equivalent to LDFLAGS=-version-info x:x:x
@@ -461,7 +461,7 @@ if (UNIX)
 endif()
 
 # Setup the linking for all libs.
-foreach (lib websockets websockets_shared)
+foreach (lib websockets)
 	target_link_libraries(${lib} ${LIB_LIST})
 endforeach()
 
@@ -726,7 +726,7 @@ install(FILES ${HDR_PUBLIC}
 set(CPACK_COMPONENT_HEADERS_DISPLAY_NAME "Header files")
 
 # Install libs.
-install(TARGETS websockets websockets_shared
+install(TARGETS websockets
 		LIBRARY DESTINATION lib${LIB_SUFFIX}
 		ARCHIVE DESTINATION lib${LIB_SUFFIX}
 		COMPONENT libraries)
