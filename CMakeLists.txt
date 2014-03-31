@@ -310,7 +310,7 @@ endif(UNIX)
 
 
 if (CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
-	set( CMAKE_C_FLAGS "-Wall -Werror -O4 -fvisibility=hidden ${CMAKE_C_FLAGS}" )
+	set( CMAKE_C_FLAGS "-Wall -O4 -fvisibility=hidden ${CMAKE_C_FLAGS}" )
 endif ()
 
 source_group("Headers Private"  FILES ${HDR_PRIVATE})
@@ -324,10 +324,10 @@ add_library(websockets STATIC
 			${HDR_PRIVATE}
 			${HDR_PUBLIC}
 			${SOURCES})
-add_library(websockets_shared SHARED
-			${HDR_PRIVATE}
-			${HDR_PUBLIC}
-			${SOURCES})
+#add_library(websockets_shared SHARED
+#			${HDR_PRIVATE}
+#			${HDR_PUBLIC}
+#			${SOURCES})
 
 if (WIN32)
 	# On Windows libs have the same file ending (.lib)
@@ -338,24 +338,24 @@ if (WIN32)
 		OUTPUT_NAME websockets_static)
 
 	# Compile as DLL (export function declarations)
-	set_property(
-		TARGET websockets_shared
-		PROPERTY COMPILE_DEFINITIONS 
-		LWS_DLL
-		LWS_INTERNAL
-		)
+#	set_property(
+#		TARGET websockets_shared
+#		PROPERTY COMPILE_DEFINITIONS 
+#		LWS_DLL
+#		LWS_INTERNAL
+#		)
 endif(WIN32)
 
 # We want the shared lib to be named "libwebsockets"
 # not "libwebsocket_shared".
-set_target_properties(websockets_shared
-		PROPERTIES 
-		OUTPUT_NAME websockets)
-
+#set_target_properties(websockets_shared
+#		PROPERTIES 
+#		OUTPUT_NAME websockets)
+#
 # Set the so version of the lib.
 # Equivalent to LDFLAGS=-version-info x:x:x
 if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
-	foreach(lib websockets websockets_shared)
+	foreach(lib websockets)
 		set_target_properties(${lib} 
 			PROPERTIES
 			SOVERSION ${SOVERSION})
@@ -408,7 +408,7 @@ if (NOT WITHOUT_EXTENSIONS)
 	endif()
 
 	# Make sure ZLib is compiled before the libs.
-	foreach (lib websockets websockets_shared)
+	foreach (lib websockets)
 		add_dependencies(${lib} ZLIB)
 	endforeach()
 
@@ -462,7 +462,7 @@ if (UNIX)
 endif()
 
 # Setup the linking for all libs.
-foreach (lib websockets websockets_shared)
+foreach (lib websockets)
 	target_link_libraries(${lib} ${LIB_LIST})
 endforeach()
 
@@ -497,8 +497,8 @@ if (NOT WITHOUT_TESTAPPS)
 		add_executable(${TEST_NAME} ${TEST_SRCS} ${TEST_HDR})
 		
 		if (LINK_TESTAPPS_DYNAMIC)
-			target_link_libraries(${TEST_NAME} websockets_shared)
-			add_dependencies(${TEST_NAME} websockets_shared)
+			target_link_libraries(${TEST_NAME})
+			add_dependencies(${TEST_NAME})
 		else(LINK_TESTAPPS_DYNAMIC)
 			target_link_libraries(${TEST_NAME} websockets)
 			add_dependencies(${TEST_NAME} websockets)
@@ -727,7 +727,7 @@ install(FILES ${HDR_PUBLIC}
 set(CPACK_COMPONENT_HEADERS_DISPLAY_NAME "Header files")
 
 # Install libs.
-install(TARGETS websockets websockets_shared
+install(TARGETS websockets
 		LIBRARY DESTINATION lib${LIB_SUFFIX}
 		ARCHIVE DESTINATION lib${LIB_SUFFIX}
 		COMPONENT libraries)
