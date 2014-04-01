@@ -96,7 +96,7 @@
 #include <cyassl/openssl/ssl.h>
 #include <cyassl/error.h>
 unsigned char *
-SHA1(const unsigned char *d, size_t n, unsigned char *md);
+lws_SHA1(const unsigned char *d, size_t n, unsigned char *md);
 #else
 #include <openssl/ssl.h>
 #include <openssl/evp.h>
@@ -524,7 +524,7 @@ extern int interface_to_sa(const char *ifname,
 #ifndef LWS_OPENSSL_SUPPORT
 
 unsigned char *
-SHA1(const unsigned char *d, size_t n, unsigned char *md);
+lws_SHA1(const unsigned char *d, size_t n, unsigned char *md);
 
 #else
 

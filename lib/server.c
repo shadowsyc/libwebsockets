@@ -25,6 +25,7 @@
 #ifdef WIN32
 #include <tchar.h>
 #include <io.h>
+typedef int ssize_t;
 #else
 #ifdef LWS_BUILTIN_GETIFADDRS
 #include <getifaddrs.h>
