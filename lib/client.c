@@ -200,11 +200,17 @@ int lws_client_socket_service(struct libwebsocket_context *context,
 				n != X509_V_ERR_DEPTH_ZERO_SELF_SIGNED_CERT ||
 							   wsi->use_ssl != 2)) {
 
-				lwsl_err(
-				      "server's cert didn't look good %d\n", n);
-				libwebsocket_close_and_free_session(context,
-						wsi, LWS_CLOSE_STATUS_NOSTATUS);
-				return 0;
+				if (n == 20) {
+					// Patch to permit self-signed certificate like openssl.c in libcurl
+					lwsl_err("unable to get local issuer certificate (20), continuing anyway.\n");
+				} else {
+					lwsl_err(
+					      "server's cert didn't look good %d\n", n);
+					libwebsocket_close_and_free_session(context,
+							wsi, LWS_CLOSE_STATUS_NOSTATUS);
+					return 0;
+				}
+
 			}
 #endif /* USE_CYASSL */
 		} else
