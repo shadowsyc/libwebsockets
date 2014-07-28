@@ -38,7 +38,7 @@ def build_opencv(srcroot, buildroot, target, arch):
     # for some reason, if you do not specify CMAKE_BUILD_TYPE, it puts libs to "RELEASE" rather than "Release"
     cmakeargs = ("-GXcode " +
                 "-DCMAKE_TOOLCHAIN_FILE=%s/ios/cmake/Toolchains/Toolchain-%s_Xcode.cmake " +
-                "-DWITH_SSL=0 " +
+                "-DWITH_SSL=1 " +
                 "-DWITHOUT_SERVER=1 " +
                 "-DWITHOUT_TESTAPPS=1 " +
                 "-DCMAKE_INSTALL_PREFIX:PATH=/Users/james/Project/libwebsockets/install") % (srcroot, target)
