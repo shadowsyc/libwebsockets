@@ -537,6 +537,10 @@ ws_SHA1(const unsigned char *d, size_t n, unsigned char *md);
 
 #else
 
+/* Added to build for 64bit architecture */
+unsigned char *
+ws_SHA1(const unsigned char *d, size_t n, unsigned char *md);
+
 LWS_EXTERN int openssl_websocket_private_data_index;
 
 #endif
