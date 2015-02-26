@@ -1203,20 +1203,23 @@ libwebsocket_context_destroy(struct libwebsocket_context *context)
 
 #ifdef LWS_OPENSSL_SUPPORT
 	if (context->ssl_ctx)
-		SSL_CTX_free(context->ssl_ctx);
+		//SSL_CTX_free(context->ssl_ctx);
 	if (context->ssl_client_ctx)
-		SSL_CTX_free(context->ssl_client_ctx);
+		//SSL_CTX_free(context->ssl_client_ctx);
 
-	ERR_remove_state(0);
-	ERR_free_strings();
-	EVP_cleanup();
-	CRYPTO_cleanup_all_ex_data();
+	lwsl_notice("This is patched version to work with ssl for HttpRequest in cocos2d-x with no ssl free\n");
+
+	//ERR_remove_state(0);
+	//ERR_free_strings();
+	//EVP_cleanup();
+	//CRYPTO_cleanup_all_ex_data();
 #endif
 
 	if (context->fds)
 		free(context->fds);
 	if (context->lws_lookup)
 		free(context->lws_lookup);
+
 
 	free(context);
 
